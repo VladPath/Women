@@ -27,7 +27,7 @@ cats_db = [
 
 def index(request):
     data = {
-        'title': 'Это была вторая ветка но теперь главная!',
+        'title': 'Главная страница!',
         'menu': menu,
         'posts': data_db,
         'cat_selected':0,
