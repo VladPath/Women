@@ -55,7 +55,6 @@ def show_post(request, post_id):
 def addpage(request):
     return HttpResponse("Добавление статьи")
 
-
 def contact(request):
     return HttpResponse("Обратная связь")
 
