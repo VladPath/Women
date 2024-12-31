@@ -28,7 +28,7 @@ cats_db = [
 ]
 
 def index(request):
-    posts = women.objects.filter(is_published=1)
+    posts = women.published.all()
     data = {
         'title': 'Главная страница!',
         'menu': menu,
