@@ -11,7 +11,7 @@ class PublishedManager(models.Manager):
 class women(models.Model):
     class Status(models.IntegerChoices):
         DRAFT= 0, 'Черновик'
-        PUBLISHED = 1, 'Опублековано'
+        PUBLISHED = 1, 'Опубликовано'
     
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True)
@@ -19,8 +19,8 @@ class women(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(choices=Status.choices,default=Status.DRAFT)
-    cat = models.ForeignKey('Category',on_delete=models.PROTECT)
-    
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='posts')
+    tags = models.ManyToManyField('TagPost', blank=True, related_name='tags')
     
     objects = models.Manager()
     published = PublishedManager()
@@ -41,11 +41,19 @@ class women(models.Model):
 class Category(models.Model):
     
     name = models.CharField(max_length=100, db_index=True)
-    slug = models.SlugField(max_length=244, unique=True, db_index=True)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True)
     
     def __str__(self):
         return self.name
     
     def get_absolute_url(self):
         return reverse("category", kwargs={"cat_slug": self.slug})
+
+class TagPost(models.Model):
+    tag = models.CharField(max_length=100, db_index=True)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True)
+    
+    def __str__(self):
+        return self.tag
+    
     
